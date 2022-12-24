@@ -1,0 +1,49 @@
+@import url("https://fonts.googleapis.com/css2?family=Courgette&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap");
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/*  */
+body {
+  font-family: "Poppins", sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffffff;
+}
+
+:root {
+  --notify-height: 4rem;
+  --light: #f4f4f9;
+  --prim: #588b8b;
+  --prim1: #8cb3b381;
+  --sec: #61b9a0;
+  --sec1: #3d69c8;
+  --main-font: "Courgette", cursive;
+}
+
+a {
+  text-decoration: none;
+}
+button {
+  cursor: pointer;
+}
+
+button:active {
+  transform: scale(1.08);
+}
+
+ul {
+  list-style: none;
+}
+
+.centered {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
