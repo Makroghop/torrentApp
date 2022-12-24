@@ -9,7 +9,6 @@ var path = require("path");
 var del = require("del");
 var mime = require("mime");
 var archiver = require("archiver");
-const { Dir } = require("fs");
 const dev = process.env.NODE_ENV !== "production";
 const app = next({ dev });
 const handle = app.getRequestHandler();
@@ -52,13 +51,13 @@ app
         console.log(torrentUrl);
         if (torrentUrl.indexOf("magnet:") === 0) {
           parsed = new TorrentStream(torrentUrl, {
-            path: Dir,
+            path: DIR,
           });
           arrange(parsed);
         } else {
           request.get(torrentUrl, function (err, res, body) {
             parsed = new TorrentStream(body, {
-              path: Dir,
+              path: DIR,
             });
             arrange(parsed);
           });
