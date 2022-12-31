@@ -51,11 +51,21 @@ class Form extends Component {
       url: "",
       torrent: [null],
       torrents: [],
+      allTorrents: null,
       submitting: null,
       fetching: false,
       errorOccured: false,
       errMsg: "",
     };
+
+    this.refreshTorrents = this.refreshTorrents.bind(this);
+  }
+  async componentDidMount() {
+    let response = await fetch(`/torrents/`);
+
+    let torrentsData = await response.json();
+    // console.log(torrentsData);
+    this.setState({ allTorrents: torrentsData });
   }
 
   render() {
@@ -64,6 +74,8 @@ class Form extends Component {
         this.setState({ torrent: null });
       };
     }
+    const { allTorrents } = this.state;
+
     return (
       <>
         {this.state.submitting ? (
@@ -95,20 +107,60 @@ class Form extends Component {
             </div>
           </form>
         </Container>
-        <OutTitle className="converted-title">Converted Files</OutTitle>
+        {this.state.torrents.length > 0 ? (
+          <OutTitle className="converted-title">Converted Files</OutTitle>
+        ) : (
+          ""
+        )}
         <Suspense fallback={<div>Loading...</div>}>
           {this.state.torrents.map((item, index) => {
-            console.log(item);
+            // console.log(item);
             return (
               <Converted
-                id={index}
+                key={index}
                 name={item.name}
                 infoHash={item.infoHash}
                 files={item.files}
+                refreshTorrents={this.refreshTorrents}
+                allowDelete={false}
               />
             );
           })}
         </Suspense>
+        <br />
+        <hr />
+        <br />
+
+        <div>
+          {allTorrents ? (
+            <OutTitle className="converted-title">All Converted Files</OutTitle>
+          ) : (
+            ""
+          )}
+          {allTorrents ? (
+            allTorrents
+              .map((torrent_, index) => {
+                // console.log(torrent_);
+                return torrent_ ? (
+                  <>
+                    <Converted
+                      key={index}
+                      name={torrent_.name}
+                      infoHash={torrent_.infoHash}
+                      files={torrent_.files}
+                      refreshTorrents={this.refreshTorrents}
+                      allowDelete={true}
+                    />
+                  </>
+                ) : (
+                  ""
+                );
+              })
+              .reverse()
+          ) : (
+            <div>loading....</div>
+          )}
+        </div>
       </>
     );
   }
@@ -121,9 +173,10 @@ class Form extends Component {
         this.setState({ pasteText: text });
       })
       .catch((err) => {
-        this.setState({ errMsg: "Couldn't paste text" });
+        // this.setState({ errMsg: "Couldn't paste text" });
       });
   };
+
   onSubmit = (e) => {
     e.preventDefault();
     this.setState({ submitting: true });
@@ -155,6 +208,7 @@ class Form extends Component {
 
       .then((data) => {
         this.loadTorrent(data.infoHash);
+        url.value = "";
       })
       .catch((err) => {
         this.setState((state) => ({
@@ -164,7 +218,7 @@ class Form extends Component {
       });
   };
 
-  //////////Helper  Functions
+  //////////  Helper  Functions
 
   removeErr = () => {
     this.setState({ errorOccured: false });
@@ -189,6 +243,17 @@ class Form extends Component {
       torrents: state.torrents.concat(data).reverse(),
       submitting: false,
     }));
+  }
+  refreshTorrents() {
+    fetch("/torrents/")
+      .then((res) => res.json())
+      .then((torrentsData) => {
+        // console.log(torrentsData);
+        return this.setState({ allTorrents: torrentsData });
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   }
 }
 export default Form;

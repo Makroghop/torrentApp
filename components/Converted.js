@@ -1,6 +1,8 @@
 import styled from "@emotion/styled";
 import { Component } from "react";
 import DownloadIcon from "@mui/icons-material/Download";
+import LaunchIcon from "@mui/icons-material/Launch";
+import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import { formatBytes } from "../lib/functions";
 
@@ -17,13 +19,19 @@ const Convert = styled.div`
   margin: 8px;
 `;
 const FileTitle = styled.div`
+  color: var(--light);
+  background-color: var(--sec1);
+  padding: 9px;
+  border-radius: 3px;
+  display: flex;
+  justify-content: space-between;
   h3 {
-    color: var(--light);
-    background-color: var(--sec1);
     // margin: 16px;
-    padding: 9px;
-    border-radius: 3px;
     // font-size: 1em;
+  }
+  .del-icon {
+    color: coral;
+    cursor: pointer;
   }
 `;
 const Files = styled.div`
@@ -55,14 +63,51 @@ const Downloading = styled.div`
 class Converted extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      copied: false,
+    };
   }
+
+  copyToClipboard = (text) => {
+    navigator.clipboard.writeText(text).then(() => {
+      this.setState({
+        copied: true,
+      });
+      alert("copied");
+    });
+  };
   render() {
+    if (!this.props) return;
+    const handleDelete = () => {
+      if (!this.props) return;
+
+      // console.log(this.props.infoHash);
+      fetch(`/torrents/${this.props.infoHash}`, {
+        method: "DELETE",
+      }).then(() => {
+        this.props.refreshTorrents();
+      });
+    };
     return (
       <>
         <Container>
           <Convert>
             <FileTitle>
-              <h3>{this.props.name}</h3>
+              <h3>
+                {this.props.name.length > 15
+                  ? this.props.name.slice(0, 11) +
+                    "......." +
+                    this.props.name.slice(-4)
+                  : this.props.name}
+              </h3>
+              {this.props.allowDelete === true ? (
+                <DeleteForeverIcon
+                  className="del-icon"
+                  onClick={handleDelete}
+                />
+              ) : (
+                ""
+              )}
             </FileTitle>
 
             <Files>
@@ -71,15 +116,27 @@ class Converted extends Component {
                   this.props.files.map((file_, index) => {
                     return (
                       <li key={index}>
-                        <span>{file_.name}</span>
+                        <span>
+                          {file_.name.slice(0, 14) +
+                            "..........." +
+                            file_.name.slice(-4)}
+                        </span>
                         <a
                           href={`${file_.link}`}
                           target="_blank"
                           // download={file_.name}
                         >
                           <span>{formatBytes(file_.length)}</span>
-                          <DownloadIcon />
+                          <LaunchIcon />
                         </a>
+                        <ContentCopyIcon
+                          style={{ cursor: "pointer" }}
+                          onClick={() =>
+                            this.copyToClipboard(
+                              window.location.href + file_.link
+                            )
+                          }
+                        />
                       </li>
                     );
                   })

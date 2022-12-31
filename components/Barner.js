@@ -15,7 +15,7 @@ class Banner extends Component {
     return (
       <>
         <Container className="centered">
-          <h1>Online Torrent Downloader</h1>
+          <h1>Online Torrent Converter</h1>
         </Container>
       </>
     );
