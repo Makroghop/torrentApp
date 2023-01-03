@@ -114,6 +114,7 @@ class Converted extends Component {
               <ul>
                 {this.props.files ? (
                   this.props.files.map((file_, index) => {
+                    if (!file_ || !file_.length) return;
                     return (
                       <li key={index}>
                         <span>
