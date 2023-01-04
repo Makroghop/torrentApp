@@ -78,6 +78,8 @@ class Converted extends Component {
   };
   render() {
     if (!this.props) return;
+    if (!this.props.name) return;
+    if (!this.props.files) return;
     const handleDelete = () => {
       if (!this.props) return;
 
