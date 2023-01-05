@@ -30,8 +30,9 @@ const PORT = process.env.PORT || 8080;
       res.end("Hello Hey");
     });
     server.get("/", (req, res) => {
-      handle(req, res);
+      return app.render(req, res, "/index", req.query);
     });
+
     server.use(express.json());
     server.use(function (req, res, next) {
       res.header("Access-Control-Allow-Origin", "*");

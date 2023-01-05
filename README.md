@@ -1,8 +1,9 @@
-# torrent for  the web
+# torrent for the web
 
-A nextjs application to stream and download a torrent through a plain http request.
+A nextjs application that coverts, downloads and stream torrents directly in the browser through a plain http request
 
-###### © Holy Mark Mak., ISC license.
+###### © Holy Mark Makroghop, ISC license.
 
 # torrent_stream_and_download
-# torrent_app
+
+<p>REST-API  documentation found in APIdoc.md file</p>

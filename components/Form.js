@@ -1,3 +1,8 @@
+/**
+ *
+ * @author Holy Mark.
+ * @file Main GUI.
+ */
 import styled from "@emotion/styled";
 import { Component, lazy, Suspense } from "react";
 import { paste } from "../lib/functions";
