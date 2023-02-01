@@ -14,7 +14,7 @@ var fs = require("fs"),
   torrents = {},
   options = {};
 
-// console.log(configPath);
+console.log({ configPath });
 function save() {
   mkdirp(configPath, function (err) {
     if (err) {
