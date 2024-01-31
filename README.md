@@ -1,68 +1,85 @@
-# torrent for the web
 
-A nextjs application that coverts, downloads and stream torrents directly in the browser through a plain http request
+# Torrent for the Web 🌐
+
+A Next.js application that converts, downloads, and streams torrents directly in the browser through a plain HTTP request.
 
 ###### © Holy Mark Makroghop, ISC license.
 
-# torrent_stream_and_download
+# Torrent Stream and Download
 
-# REST API Documentation
+## REST API Documentation 📚
+
+### Get All Torrents
 
 ```json
 {
   "endpoint": "/torrents",
   "method": "GET",
-  "description": "will return the list of all torrents"
+  "description": "Returns the list of all torrents"
 }
 ```
+
+### Get Single Torrent
 
 ```json
 {
   "endpoint": "/torrents/{infoHash}",
   "method": "GET",
-  "description": "will return a single torrent"
+  "description": "Returns a single torrent"
 }
 ```
+
+### Get Torrent Stats
 
 ```json
 {
   "endpoint": "/torrents/{infoHash}/stats",
   "method": "GET",
-  "description": "will return the torrent stats (speed, bandwidth, etc.)"
+  "description": "Returns the torrent stats (speed, bandwidth, etc.)"
 }
 ```
+
+### Get M3U Playlist
 
 ```json
 {
   "endpoint": "/torrents/{infoHash}/files",
   "method": "GET",
-  "description": "will return the M3U playlist"
+  "description": "Returns the M3U playlist"
 }
 ```
+
+### Stream File
 
 ```json
 {
   "endpoint": " /torrents/{infoHash}/files/{path}",
   "method": "GET",
-  "description": " will start streaming the file (honoring the `Range` header)"
+  "description": "Starts streaming the file (honoring the \`Range\` header)"
 }
 ```
+
+### Pause/Resume Swarm and Peer Discovery
 
 ```json
 {
   "endpoint": "/torrents/{infoHash}/pause",
   "method": "POST",
-  "description": "will pause/resume the swarm and peer discovery"
+  "description": "Pauses/resumes the swarm and peer discovery"
 }
 ```
+
+### Start/Stop Download
 
 ```json
 {
   "endpoint": ["/torrents/{infoHash}/start", "/torrents/{infoHash}/stop"],
   "method": "POST",
-  "description": "will start/stop the download by selecting/deselecting all files"
+  "description": "Starts/stops the download by selecting/deselecting all files"
 }
 ```
+
+### Start/Stop Downloading a File
 
 ```json
 {
@@ -71,31 +88,38 @@ A nextjs application that coverts, downloads and stream torrents directly in the
     "/torrents/{infoHash}/stop/{index}"
   ],
   "method": "POST",
-  "description": "will start/stop downloading a particular file (by index)"
+  "description": "Starts/stops downloading a particular file (by index)"
 }
 ```
+
+### Add New Torrent
 
 ```json
 {
   "endpoint": "/torrents",
   "method": "POST",
-  "description": "will add a new torrent (`{"link":"magnet link or URL"`)}"
+  "description": "Adds a new torrent (\`{"link":"magnet link or URL"}\`)"
 }
 ```
+
+### Upload Torrent File
 
 ```json
 {
   "endpoint": " /upload",
   "method": "POST",
-  "description": " will accept a .torrent file as an attachment (`file` field in `multipart/form-data`)"
+  "description": "Accepts a .torrent file as an attachment (\`file\` field in \`multipart/form-data\`)"
 }
 ```
+
+### Delete Torrent
 
 ```json
 {
   "endpoint": "/torrents/{infoHash}",
   "method": "DELETE",
-  "description": "will delete the torrent"
+  "description": "Deletes the torrent"
 }
 ```
 
+Feel free to use and contribute to this project! 🚀
